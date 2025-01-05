@@ -6,9 +6,10 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
-    <title>Combined Layout</title>
+    <title>Eyre Bi Jawad</title>
     <link rel="icon" type="image/x-icon" href="Logo.jpeg" />
     <style>
+      /* Reset & Root Variables */
       * {
         margin: 0;
         padding: 0;
@@ -16,12 +17,24 @@
         -webkit-tap-highlight-color: transparent;
       }
 
+      :root {
+        --card-height: 500px;
+        --card-margin: 16px;
+        --card-top-offset: 24px;
+        --numcards: 4;
+        --primary-color: #3498db;
+        --text-light: #ffffff;
+        --text-dark: #333333;
+        --bg-dark: #1c1c1c;
+        --bg-card: #2c2c2c;
+      }
+
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
           Oxygen, Ubuntu, Cantarell, sans-serif;
         overflow-x: hidden;
         touch-action: manipulation;
-        background: #1c1c1c;
+        background: var(--bg-dark);
       }
 
       /* Hero Section */
@@ -29,15 +42,18 @@
         position: relative;
         width: 100%;
         min-height: 100vh;
-        height: 1150px;
+        height: 1150px; /* Increase this value to ensure all polaroids are visible */
         background: linear-gradient(135deg, #bafcff 0%, #ffffff 100%);
+        will-change: transform;
+        transform: translateZ(0);
+        overflow: hidden;
       }
 
       .hero-content {
         position: fixed;
         top: 0;
         left: 0;
-        padding: 2rem;
+        padding: clamp(1rem, 3vw, 2rem);
         width: 100%;
         z-index: 2;
         opacity: 1;
@@ -50,13 +66,13 @@
       }
 
       .hero-content-inner {
-        max-width: 90%;
+        max-width: min(90%, 700px);
         margin: 0 auto;
       }
 
       .subtitle {
         font-size: clamp(1rem, 2.5vw, 1.25rem);
-        color: #333;
+        color: var(--text-dark);
         margin-bottom: 1rem;
         opacity: 0;
         animation: fadeIn 1s forwards;
@@ -65,7 +81,7 @@
       .hero-title {
         font-size: clamp(2rem, 5vw, 4rem);
         font-weight: 700;
-        line-height: 1.1;
+        line-height: 1.2;
         margin-bottom: 1.5rem;
         opacity: 0;
         animation: fadeIn 1s forwards 0.2s;
@@ -75,7 +91,7 @@
         display: inline-flex;
         align-items: center;
         padding: 0.8rem 1.5rem;
-        background-color: #348bc5;
+        background-color: var(--primary-color);
         color: #000;
         text-decoration: none;
         border-radius: 100px;
@@ -99,8 +115,7 @@
       .polaroid-container {
         position: relative;
         width: 100%;
-        padding-top: calc(100vh - 2rem);
-        margin: 0 auto;
+        padding-top: 100vh;
       }
 
       .polaroid {
@@ -133,21 +148,18 @@
         --rotation: -8deg;
         --delay: 0.6s;
       }
-
       .polaroid:nth-child(2) {
         top: 40%;
         left: 40%;
         --rotation: 5deg;
         --delay: 0.8s;
       }
-
       .polaroid:nth-child(3) {
         top: 70%;
         left: 15%;
         --rotation: -5deg;
         --delay: 1s;
       }
-
       .polaroid:nth-child(4) {
         top: 100%;
         left: 35%;
@@ -156,18 +168,10 @@
       }
 
       /* Cards Section */
-      :root {
-        --card-height: 500px;
-        --card-margin: 16px;
-        --card-top-offset: 24px;
-        --numcards: 4;
-      }
-
       #cards {
         list-style: none;
         padding: 20px;
-        padding-bottom: calc(var(--numcards) * var(--card-top-offset));
-        color: #ffffff;
+        color: var(--text-light);
       }
 
       .card {
@@ -190,32 +194,26 @@
       }
 
       .card-content {
-        text-decoration: none;
-        background: #2c2c2c;
+        background: var(--bg-card);
         border-radius: 12px;
         padding: 3rem;
         display: grid;
         grid-template-columns: 1fr 500px;
         gap: 3rem;
-        align-items: start;
+        height: var(--card-height);
         transform-origin: 50% 0%;
         will-change: transform;
-        height: var(--card-height);
-        overflow: hidden;
-        cursor: pointer;
         transition: transform 0.3s ease;
       }
 
       .project-info {
         display: flex;
         flex-direction: column;
-        height: 100%;
-        position: relative;
         gap: 1.5rem;
       }
 
       .video-category {
-        color: #3498db;
+        color: var(--primary-color);
         font-size: 1rem;
         font-weight: 500;
         text-transform: uppercase;
@@ -225,7 +223,7 @@
       .project-title {
         font-size: 2.5rem;
         font-weight: 600;
-        color: #ffffff;
+        color: var(--text-light);
       }
 
       .tag-container {
@@ -239,7 +237,6 @@
         padding: 0.5rem 1rem;
         border-radius: 100px;
         font-size: 0.875rem;
-        color: #ffffff;
       }
 
       .video-meta {
@@ -261,8 +258,6 @@
         padding-top: 56.25%;
         border-radius: 8px;
         overflow: hidden;
-        text-decoration: none;
-        color: inherit;
       }
 
       .video-thumbnail {
@@ -272,7 +267,6 @@
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: 8px;
         transition: transform 0.3s ease;
       }
 
@@ -284,7 +278,6 @@
         padding: 0.25rem 0.5rem;
         border-radius: 4px;
         font-size: 0.875rem;
-        color: white;
         z-index: 2;
       }
 
@@ -295,32 +288,26 @@
         transform: translate(-50%, -50%);
         width: 60px;
         height: 60px;
-        background: #3498db;
+        background: var(--primary-color);
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
-        transition: transform 0.3s ease;
         z-index: 2;
       }
 
       .play-indicator::before {
         content: "";
-        width: 0;
-        height: 0;
         border-style: solid;
         border-width: 10px 0 10px 20px;
         border-color: transparent transparent transparent #f3f3f3;
         margin-left: 4px;
       }
 
-      /* Closing card styles */
+      /* Closing Card Styles */
       .closing-card .card-content {
         grid-template-columns: 1fr 1px 1fr;
         padding: 4rem;
-        height: var(--card-height);
-        display: grid;
-        gap: 2rem;
         align-items: center;
       }
 
@@ -334,49 +321,35 @@
       .closing-section:first-child {
         text-align: left;
       }
-
       .closing-section:last-child {
         text-align: right;
       }
 
-      .closing-text {
-        font-size: 4.5rem;
-        font-weight: 300;
-        line-height: 1;
-        margin-bottom: 1rem;
-        color: #ffffff;
-      }
-
+      .closing-text,
       .closing-subtext {
         font-size: 4.5rem;
         font-weight: 300;
         line-height: 1;
-        margin-bottom: 2rem;
-        color: #ffffff;
+        margin-bottom: 1rem;
       }
 
       .closing-link {
         display: inline-flex;
         align-items: center;
         gap: 0.5rem;
-        background: #3498db;
-        color: #000000;
+        background: var(--primary-color);
+        color: #000;
         padding: 0.75rem 1.5rem;
         border-radius: 100px;
         text-decoration: none;
         font-weight: 500;
-        transition: all 0.3s ease;
-      }
-
-      .closing-link:hover {
-        background: #3498db;
+        transition: transform 0.3s ease;
       }
 
       .vertical-separator {
         width: 1px;
         height: 80%;
         background: rgba(255, 255, 255, 0.1);
-        margin: 0 auto;
       }
 
       /* Animations */
@@ -391,57 +364,102 @@
         }
       }
 
-      /* Responsive Styles */
+      /* Media Queries */
       @media (max-width: 768px) {
-        .card-content {
-          grid-template-columns: 1fr;
-          gap: 2rem;
+        .hero-wrapper {
+          min-height: calc(100vh + 200px);
         }
 
         .hero-content {
+          position: relative;
+        }
+
+        .hero-content-inner {
+          margin: 2rem auto;
+        }
+
+        .polaroid-container {
+          padding-top: 2rem;
+          min-height: 600px;
+        }
+
+        .polaroid {
+          width: calc(100% - 2rem);
+          max-width: 200px;
+        }
+
+        .polaroid img {
           width: 100%;
+          height: auto;
+          aspect-ratio: 1;
         }
 
         .polaroid:nth-child(1) {
+          top: 0;
           left: 10%;
         }
         .polaroid:nth-child(2) {
-          left: 40%;
+          top: 150px;
+          right: 10%;
+          left: auto;
         }
         .polaroid:nth-child(3) {
+          top: 300px;
           left: 15%;
         }
         .polaroid:nth-child(4) {
-          left: 45%;
+          top: 450px;
+          right: 10%;
+          left: auto;
+        }
+
+        #cards {
+          padding: 20px;
+          padding-bottom: 40px;
+        }
+
+        .card {
+          padding-top: calc(var(--index) * 15px);
+        }
+
+        .card-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 2rem;
+          height: auto;
+          min-height: calc(var(--card-height) * 0.8);
         }
 
         .closing-card .card-content {
           grid-template-columns: 1fr;
-          gap: 4rem;
+          text-align: center;
+          min-height: calc(var(--card-height) * 0.6);
         }
 
         .vertical-separator {
           display: none;
         }
 
-        .closing-section:last-child {
-          text-align: left;
+        .closing-section {
+          padding: 1rem;
+          gap: 1rem;
+          text-align: center;
         }
 
         .closing-text,
         .closing-subtext {
-          font-size: 3rem;
+          font-size: 2.5rem;
+          margin-bottom: 0.5rem;
         }
       }
 
+      /* Desktop Adjustments */
       @media (min-width: 769px) {
         .hero-content {
           width: 50%;
-          background: none;
         }
 
         .hero-content-inner {
-          max-width: 700px;
           margin: 2rem;
         }
 
@@ -451,15 +469,8 @@
         }
       }
 
+      /* Scroll-based Animation Support */
       @supports (animation-timeline: works) {
-        @scroll-timeline cards-element-scrolls-in-body {
-          source: selector(body);
-          scroll-offsets: selector(#cards) start 1, selector(#cards) start 0;
-          start: selector(#cards) start 1;
-          end: selector(#cards) start 0;
-          time-range: 4s;
-        }
-
         .card {
           --index0: calc(var(--index) - 1);
           --reverse-index: calc(var(--numcards) - var(--index0));
@@ -467,18 +478,91 @@
         }
 
         .card-content {
-          transform-origin: 50% 0%;
-          will-change: transform;
           --duration: calc(var(--reverse-index0) * 1s);
           --delay: calc(var(--index0) * 1s);
           animation: var(--duration) linear scale var(--delay) forwards;
-          animation-timeline: cards-element-scrolls-in-body;
+          animation-timeline: scroll(root);
         }
 
         @keyframes scale {
           to {
             transform: scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
           }
+        }
+      }
+
+      /* Accessibility & Performance */
+      @media (prefers-reduced-motion: reduce) {
+        * {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+      /* Closing card styles */
+      .closing-card .card-content {
+        grid-template-columns: 1fr 1px 1fr; /* Three columns: content | line | content */
+        padding: 4rem;
+        align-items: center;
+        min-height: var(--card-height);
+      }
+
+      .closing-section {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      /* Left section */
+      .closing-section:first-child {
+        text-align: left;
+        padding-right: 4rem; /* More space before the divider */
+      }
+
+      /* Right section */
+      .closing-section:last-child {
+        text-align: left;
+        padding-left: 4rem; /* More space after the divider */
+      }
+
+      /* Vertical line for desktop */
+      .vertical-separator {
+        width: 1px;
+        height: 70%;
+        background: rgba(255, 255, 255, 0.15);
+        margin: 0 auto;
+      }
+
+      /* Horizontal line for mobile */
+      .horizontal-separator {
+        display: none;
+        width: 100%;
+        height: 1px;
+        background: rgba(255, 255, 255, 0.15);
+        margin: 2rem 0;
+      }
+
+      /* Mobile adjustments */
+      @media (max-width: 768px) {
+        .closing-card .card-content {
+          grid-template-columns: 1fr; /* Single column on mobile */
+          padding: 2rem;
+        }
+
+        .vertical-separator {
+          display: none; /* Hide vertical line */
+        }
+
+        .horizontal-separator {
+          display: block; /* Show horizontal line */
+        }
+
+        .closing-section:first-child,
+        .closing-section:last-child {
+          padding: 1rem; /* Equal padding on mobile */
+          text-align: center; /* Center align on mobile */
         }
       }
     </style>
@@ -490,11 +574,9 @@
       <div class="hero-wrapper">
         <div class="hero-content">
           <div class="hero-content-inner">
-            <p class="subtitle">Robimy to inaczej</p>
-            <h1 class="hero-title">
-              Strategia, kreacja, kampanie digital, projektowanie UX i UI
-            </h1>
-            <a href="#cards" class="cta-button">Zobacz więcej</a>
+            <p class="subtitle">Sorry Attachtine</p>
+            <h1 class="hero-title">Chalahna EL Fnanella w bhess sar dawrak</h1>
+            <a href="#" class="cta-button">Shop Now</a>
           </div>
         </div>
 
@@ -610,35 +692,48 @@
           <div class="card-content">
             <div class="closing-section">
               <div>
-                <div class="closing-text">Youtube</div>
-                <div class="closing-subtext">for more content</div>
+                <div class="closing-text">Join The</div>
+                <div class="closing-subtext">Community</div>
               </div>
               <a
-                href="https://www.youtube.com/@choumaken"
+                href="https://ig.me/j/AbZuHbIVTbSZpP76/?igsh=MWJueGRjcGl0ODVvYQ=="
                 class="closing-link"
                 target="_blank"
               >
-                umów spotkanie →
+                ← انضم إلينا لننهض بلبنان
               </a>
             </div>
             <div class="vertical-separator"></div>
+            <div class="horizontal-separator"></div>
             <div class="closing-section">
               <div>
-                <div class="closing-text">Zobacz</div>
-                <div class="closing-subtext">więcej</div>
+                <div class="closing-text">Buy me</div>
+                <div class="closing-subtext">a coffee</div>
               </div>
               <a
-                href="https://www.instagram.com/choumaken.lb/"
+                href="https://buymeacoffee.com/choumaken"
                 class="closing-link"
                 target="_blank"
               >
-                instagram →
+                Private content →
               </a>
             </div>
           </div>
         </li>
       </ul>
     </div>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
+    <p>hhhhh</p>
 
     <script>
       // Handle hero content visibility
@@ -659,6 +754,55 @@
         anchor.addEventListener("click", function (e) {
           e.preventDefault();
           document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+    <!-- Add to JavaScript -->
+    <script>
+      // Add pull-to-refresh functionality
+      let touchStart = 0;
+      let touchY = 0;
+      document.addEventListener("touchstart", (e) => {
+        if (window.scrollY === 0) {
+          touchStart = e.touches[0].clientY;
+        }
+      });
+
+      document.addEventListener("touchmove", (e) => {
+        if (touchStart) {
+          touchY = e.touches[0].clientY - touchStart;
+          if (touchY > 50) {
+            // Show refresh indicator
+            document.querySelector(".pull-indicator").classList.add("visible");
+          }
+        }
+      });
+
+      document.addEventListener("touchend", () => {
+        if (touchY > 50) {
+          // Trigger refresh
+          location.reload();
+        }
+        touchStart = 0;
+        touchY = 0;
+        document.querySelector(".pull-indicator").classList.remove("visible");
+      });
+    </script>
+
+    <!-- 5. Improve navigation scroll behavior -->
+    <script>
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute("href"));
+          const headerOffset = 60;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition - headerOffset;
+
+          window.scrollBy({
+            top: offsetPosition,
             behavior: "smooth",
           });
         });

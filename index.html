@@ -6,6 +6,7 @@
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
     />
+    <meta name="theme-color" content="#1c1c1c" />
     <link rel="icon" type="image/x-icon" href="Logo.jpeg" />
 
     <style>
@@ -30,7 +31,7 @@
         left: 50%;
         transform: translate(-50%, -50%);
         background: #2c2c2c;
-        padding: clamp(15px, 4vw, 25px);
+        padding: clamp(12px, 3vw, 20px);
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
         display: flex;
@@ -40,10 +41,11 @@
         z-index: 10000;
         color: #ffffff;
         text-align: center;
-        width: min(90%, 500px);
-        max-height: 90vh;
+        width: min(85%, 500px);
+        max-height: 85vh;
         overflow-y: auto;
         border: 1px solid #333333;
+        -webkit-overflow-scrolling: touch;
       }
 
       .cookie-text {
@@ -71,6 +73,22 @@
         font-size: clamp(14px, 3.5vw, 16px);
         min-width: 120px;
         touch-action: manipulation;
+        min-height: 48px; /* Better touch target */
+        position: relative;
+        overflow: hidden;
+      }
+      /* Add touch ripple effect */
+      .cookie-btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: rgba(255, 255, 255, 0.1);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+
+      .cookie-btn:active::after {
+        opacity: 1;
       }
 
       .accept-btn {
@@ -126,7 +144,7 @@
         border: clamp(3px, 1vw, 5px) solid #f3f3f3;
         border-top: clamp(3px, 1vw, 5px) solid #3498db;
         border-radius: 50%;
-        animation: spin 1s linear infinite;
+        animation: spin 0.8s cubic-bezier(0.27, 0.3, 0.1, 0.99) infinite;
       }
 
       .loading-text {
@@ -265,7 +283,7 @@
         setTimeout(() => {
           loaderContainer.classList.remove("show");
           // Redirect to your desired webpage
-          window.location.href = "../main.html"; // Parent directory
+          window.location.href = "main/#content"; // Parent directory
       }
 
       function handleDecline() {
