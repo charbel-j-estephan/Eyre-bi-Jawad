@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Combined Layout</title>
+    <link rel="icon" type="image/x-icon" href="Logo.jpeg" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        overflow-x: hidden;
+        touch-action: manipulation;
+        background: #1c1c1c;
+      }
+
+      /* Hero Section */
+      .hero-wrapper {
+        position: relative;
+        width: 100%;
+        min-height: 100vh;
+        height: 1150px;
+        background: linear-gradient(135deg, #bafcff 0%, #ffffff 100%);
+      }
+
+      .hero-content {
+        position: fixed;
+        top: 0;
+        left: 0;
+        padding: 2rem;
+        width: 100%;
+        z-index: 2;
+        opacity: 1;
+        transition: opacity 0.3s ease;
+      }
+
+      .hero-content.hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .hero-content-inner {
+        max-width: 90%;
+        margin: 0 auto;
+      }
+
+      .subtitle {
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        color: #333;
+        margin-bottom: 1rem;
+        opacity: 0;
+        animation: fadeIn 1s forwards;
+      }
+
+      .hero-title {
+        font-size: clamp(2rem, 5vw, 4rem);
+        font-weight: 700;
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
+        opacity: 0;
+        animation: fadeIn 1s forwards 0.2s;
+      }
+
+      .cta-button {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.8rem 1.5rem;
+        background-color: #348bc5;
+        color: #000;
+        text-decoration: none;
+        border-radius: 100px;
+        font-weight: 500;
+        font-size: clamp(0.875rem, 2vw, 1rem);
+        opacity: 0;
+        animation: fadeIn 1s forwards 0.4s;
+        transition: transform 0.3s ease;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-2px);
+      }
+
+      .cta-button::after {
+        content: "→";
+        margin-left: 0.5rem;
+      }
+
+      /* Polaroid Section */
+      .polaroid-container {
+        position: relative;
+        width: 100%;
+        padding-top: calc(100vh - 2rem);
+        margin: 0 auto;
+      }
+
+      .polaroid {
+        position: absolute;
+        background: white;
+        padding: 0.5rem;
+        padding-bottom: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        animation: fadeIn 1s forwards var(--delay);
+        transform: rotate(var(--rotation));
+        transition: transform 0.3s ease;
+        width: fit-content;
+      }
+
+      .polaroid:hover {
+        transform: rotate(var(--rotation)) scale(1.05);
+        z-index: 10;
+      }
+
+      .polaroid img {
+        width: clamp(160px, 30vw, 240px);
+        height: clamp(160px, 30vw, 240px);
+        object-fit: cover;
+      }
+
+      .polaroid:nth-child(1) {
+        top: 10%;
+        left: 20%;
+        --rotation: -8deg;
+        --delay: 0.6s;
+      }
+
+      .polaroid:nth-child(2) {
+        top: 40%;
+        left: 40%;
+        --rotation: 5deg;
+        --delay: 0.8s;
+      }
+
+      .polaroid:nth-child(3) {
+        top: 70%;
+        left: 15%;
+        --rotation: -5deg;
+        --delay: 1s;
+      }
+
+      .polaroid:nth-child(4) {
+        top: 100%;
+        left: 35%;
+        --rotation: 7deg;
+        --delay: 1.2s;
+      }
+
+      /* Cards Section */
+      :root {
+        --card-height: 500px;
+        --card-margin: 16px;
+        --card-top-offset: 24px;
+        --numcards: 4;
+      }
+
+      #cards {
+        list-style: none;
+        padding: 20px;
+        padding-bottom: calc(var(--numcards) * var(--card-top-offset));
+        color: #ffffff;
+      }
+
+      .card {
+        position: sticky;
+        top: 0;
+        padding-top: calc(var(--index) * var(--card-top-offset));
+      }
+
+      #card-1 {
+        --index: 1;
+      }
+      #card-2 {
+        --index: 2;
+      }
+      #card-3 {
+        --index: 3;
+      }
+      #card-4 {
+        --index: 4;
+      }
+
+      .card-content {
+        text-decoration: none;
+        background: #2c2c2c;
+        border-radius: 12px;
+        padding: 3rem;
+        display: grid;
+        grid-template-columns: 1fr 500px;
+        gap: 3rem;
+        align-items: start;
+        transform-origin: 50% 0%;
+        will-change: transform;
+        height: var(--card-height);
+        overflow: hidden;
+        cursor: pointer;
+        transition: transform 0.3s ease;
+      }
+
+      .project-info {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        position: relative;
+        gap: 1.5rem;
+      }
+
+      .video-category {
+        color: #3498db;
+        font-size: 1rem;
+        font-weight: 500;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+      }
+
+      .project-title {
+        font-size: 2.5rem;
+        font-weight: 600;
+        color: #ffffff;
+      }
+
+      .tag-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        background: rgba(255, 255, 255, 0.1);
+        padding: 0.5rem 1rem;
+        border-radius: 100px;
+        font-size: 0.875rem;
+        color: #ffffff;
+      }
+
+      .video-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        color: #aaaaaa;
+        font-size: 0.875rem;
+      }
+
+      .video-views::before {
+        content: "•";
+        margin-right: 1rem;
+      }
+
+      .video-thumbnail-container {
+        position: relative;
+        width: 100%;
+        padding-top: 56.25%;
+        border-radius: 8px;
+        overflow: hidden;
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .video-thumbnail {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+
+      .video-duration {
+        position: absolute;
+        bottom: 1rem;
+        right: 1rem;
+        background: rgba(0, 0, 0, 0.8);
+        padding: 0.25rem 0.5rem;
+        border-radius: 4px;
+        font-size: 0.875rem;
+        color: white;
+        z-index: 2;
+      }
+
+      .play-indicator {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 60px;
+        height: 60px;
+        background: #3498db;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+        z-index: 2;
+      }
+
+      .play-indicator::before {
+        content: "";
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-width: 10px 0 10px 20px;
+        border-color: transparent transparent transparent #f3f3f3;
+        margin-left: 4px;
+      }
+
+      /* Closing card styles */
+      .closing-card .card-content {
+        grid-template-columns: 1fr 1px 1fr;
+        padding: 4rem;
+        height: var(--card-height);
+        display: grid;
+        gap: 2rem;
+        align-items: center;
+      }
+
+      .closing-section {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+        padding: 2rem;
+      }
+
+      .closing-section:first-child {
+        text-align: left;
+      }
+
+      .closing-section:last-child {
+        text-align: right;
+      }
+
+      .closing-text {
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1;
+        margin-bottom: 1rem;
+        color: #ffffff;
+      }
+
+      .closing-subtext {
+        font-size: 4.5rem;
+        font-weight: 300;
+        line-height: 1;
+        margin-bottom: 2rem;
+        color: #ffffff;
+      }
+
+      .closing-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        background: #3498db;
+        color: #000000;
+        padding: 0.75rem 1.5rem;
+        border-radius: 100px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease;
+      }
+
+      .closing-link:hover {
+        background: #3498db;
+      }
+
+      .vertical-separator {
+        width: 1px;
+        height: 80%;
+        background: rgba(255, 255, 255, 0.1);
+        margin: 0 auto;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px) rotate(var(--rotation));
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0) rotate(var(--rotation));
+        }
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        .card-content {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+        }
+
+        .hero-content {
+          width: 100%;
+        }
+
+        .polaroid:nth-child(1) {
+          left: 10%;
+        }
+        .polaroid:nth-child(2) {
+          left: 40%;
+        }
+        .polaroid:nth-child(3) {
+          left: 15%;
+        }
+        .polaroid:nth-child(4) {
+          left: 45%;
+        }
+
+        .closing-card .card-content {
+          grid-template-columns: 1fr;
+          gap: 4rem;
+        }
+
+        .vertical-separator {
+          display: none;
+        }
+
+        .closing-section:last-child {
+          text-align: left;
+        }
+
+        .closing-text,
+        .closing-subtext {
+          font-size: 3rem;
+        }
+      }
+
+      @media (min-width: 769px) {
+        .hero-content {
+          width: 50%;
+          background: none;
+        }
+
+        .hero-content-inner {
+          max-width: 700px;
+          margin: 2rem;
+        }
+
+        .polaroid-container {
+          width: 50%;
+          margin-left: 50%;
+        }
+      }
+
+      @supports (animation-timeline: works) {
+        @scroll-timeline cards-element-scrolls-in-body {
+          source: selector(body);
+          scroll-offsets: selector(#cards) start 1, selector(#cards) start 0;
+          start: selector(#cards) start 1;
+          end: selector(#cards) start 0;
+          time-range: 4s;
+        }
+
+        .card {
+          --index0: calc(var(--index) - 1);
+          --reverse-index: calc(var(--numcards) - var(--index0));
+          --reverse-index0: calc(var(--reverse-index) - 1);
+        }
+
+        .card-content {
+          transform-origin: 50% 0%;
+          will-change: transform;
+          --duration: calc(var(--reverse-index0) * 1s);
+          --delay: calc(var(--index0) * 1s);
+          animation: var(--duration) linear scale var(--delay) forwards;
+          animation-timeline: cards-element-scrolls-in-body;
+        }
+
+        @keyframes scale {
+          to {
+            transform: scale(calc(1.1 - calc(0.1 * var(--reverse-index))));
+          }
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Main Content -->
+    <div class="content">
+      <!-- Hero Section -->
+      <div class="hero-wrapper">
+        <div class="hero-content">
+          <div class="hero-content-inner">
+            <p class="subtitle">Robimy to inaczej</p>
+            <h1 class="hero-title">
+              Strategia, kreacja, kampanie digital, projektowanie UX i UI
+            </h1>
+            <a href="#cards" class="cta-button">Zobacz więcej</a>
+          </div>
+        </div>
+
+        <!-- Polaroid Container -->
+        <div class="polaroid-container">
+          <div class="polaroid">
+            <img src="Logo.jpeg" alt="Photo 1" />
+          </div>
+          <div class="polaroid">
+            <img src="Logo.jpeg" alt="Photo 2" />
+          </div>
+          <div class="polaroid">
+            <img src="Logo.jpeg" alt="Photo 3" />
+          </div>
+          <div class="polaroid">
+            <img src="Logo.jpeg" alt="Photo 4" />
+          </div>
+        </div>
+      </div>
+
+      <!-- Cards Section -->
+      <ul id="cards">
+        <li class="card" id="card-1">
+          <div class="card-content">
+            <div class="project-info">
+              <span class="video-category">Latest Episode</span>
+              <h2 class="project-title">EP 18: King of Sound</h2>
+              <div class="tag-container">
+                <span class="tag">New Release</span>
+                <span class="tag">Comedy</span>
+                <span class="tag">Entertainment</span>
+              </div>
+              <div class="video-meta">
+                <span class="video-date">Released Jul 4, 2024</span>
+                <span class="video-views">30.3K views</span>
+              </div>
+            </div>
+            <a
+              href="https://youtu.be/I0gsBOBeJYY"
+              class="video-thumbnail-container"
+            >
+              <img
+                src="https://img.youtube.com/vi/I0gsBOBeJYY/maxresdefault.jpg"
+                alt="Episode 18 Thumbnail"
+                class="video-thumbnail"
+              />
+              <div class="play-indicator"></div>
+              <span class="video-duration">27:51</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="card" id="card-2">
+          <div class="card-content">
+            <div class="project-info">
+              <span class="video-category">Must Watch</span>
+              <h2 class="project-title">EP 12: Revolution Tips 101</h2>
+              <div class="tag-container">
+                <span class="tag">Featured</span>
+                <span class="tag">Dark Humor</span>
+                <span class="tag">Highlights</span>
+              </div>
+              <div class="video-meta">
+                <span class="video-date">Released May 13, 2024</span>
+                <span class="video-views">58.4K views</span>
+              </div>
+            </div>
+            <a
+              href="https://youtu.be/9kiOcKrXLBw"
+              class="video-thumbnail-container"
+            >
+              <img
+                src="https://img.youtube.com/vi/9kiOcKrXLBw/maxresdefault.jpg"
+                alt="Episode 12 Thumbnail"
+                class="video-thumbnail"
+              />
+              <div class="play-indicator"></div>
+              <span class="video-duration">45:30</span>
+            </a>
+          </div>
+        </li>
+
+        <li class="card" id="card-3">
+          <div class="card-content">
+            <div class="project-info">
+              <span class="video-category">Staff Pick</span>
+              <h2 class="project-title">EP 8: Tupac is Not Dead</h2>
+              <div class="tag-container">
+                <span class="tag">Compilation</span>
+                <span class="tag">Best Of</span>
+                <span class="tag">Fan Favorite</span>
+              </div>
+              <div class="video-meta">
+                <span class="video-date">Released Oct 9, 2023</span>
+                <span class="video-views">91.5K views</span>
+              </div>
+            </div>
+            <a
+              href="https://youtu.be/YnQ1wU5oy_0"
+              class="video-thumbnail-container"
+            >
+              <img
+                src="https://img.youtube.com/vi/YnQ1wU5oy_0/maxresdefault.jpg"
+                alt="Episode 8 Thumbnail"
+                class="video-thumbnail"
+              />
+              <div class="play-indicator"></div>
+              <span class="video-duration">33:45</span>
+            </a>
+          </div>
+        </li>
+        <li class="card closing-card" id="card-4">
+          <div class="card-content">
+            <div class="closing-section">
+              <div>
+                <div class="closing-text">Youtube</div>
+                <div class="closing-subtext">for more content</div>
+              </div>
+              <a
+                href="https://www.youtube.com/@choumaken"
+                class="closing-link"
+                target="_blank"
+              >
+                umów spotkanie →
+              </a>
+            </div>
+            <div class="vertical-separator"></div>
+            <div class="closing-section">
+              <div>
+                <div class="closing-text">Zobacz</div>
+                <div class="closing-subtext">więcej</div>
+              </div>
+              <a
+                href="https://www.instagram.com/choumaken.lb/"
+                class="closing-link"
+                target="_blank"
+              >
+                instagram →
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <script>
+      // Handle hero content visibility
+      const heroContent = document.querySelector(".hero-content");
+      window.addEventListener("scroll", () => {
+        const scrollPosition = window.scrollY;
+        const heroHeight = window.innerHeight;
+
+        if (scrollPosition > heroHeight * 0.5) {
+          heroContent.classList.add("hidden");
+        } else {
+          heroContent.classList.remove("hidden");
+        }
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
