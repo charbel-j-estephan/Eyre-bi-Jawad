@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link rel="icon" type="image/x-icon" href="Logo.jpeg" />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        -webkit-tap-highlight-color: transparent;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        overflow: hidden;
+        touch-action: manipulation;
+        background: #1c1c1c;
+      }
+
+      .cookie-container {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: #2c2c2c;
+        padding: clamp(15px, 4vw, 25px);
+        border-radius: 12px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.7);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+        z-index: 10000;
+        color: #ffffff;
+        text-align: center;
+        width: min(90%, 500px);
+        max-height: 90vh;
+        overflow-y: auto;
+        border: 1px solid #333333;
+      }
+
+      .cookie-text {
+        font-size: clamp(14px, 3.5vw, 16px);
+        line-height: 1.5;
+        color: #e0e0e0;
+        margin-bottom: 5px;
+      }
+
+      .cookie-buttons {
+        display: flex;
+        gap: clamp(8px, 2vw, 15px);
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-top: 10px;
+      }
+
+      .cookie-btn {
+        padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 25px);
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-size: clamp(14px, 3.5vw, 16px);
+        min-width: 120px;
+        touch-action: manipulation;
+      }
+
+      .accept-btn {
+        background: #3498db;
+        color: white;
+      }
+
+      .decline-btn {
+        background: #2c2c2c;
+        color: #e0e0e0;
+        border: 1px solid #404040;
+      }
+
+      @media (hover: hover) {
+        .cookie-btn:hover {
+          transform: scale(1.05);
+          filter: brightness(1.1);
+        }
+      }
+
+      .cookie-btn:active {
+        transform: scale(0.95);
+      }
+
+      .loader-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #1c1c1c;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        transition: opacity 0.5s ease;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .logo {
+        width: clamp(80px, 20vw, 120px);
+        height: clamp(80px, 20vw, 120px);
+        margin-bottom: clamp(20px, 5vh, 30px);
+        animation: fadeIn 1s ease-in forwards, float 2s ease-in-out infinite,
+          glow 2s ease-in-out infinite;
+      }
+
+      .loader {
+        width: clamp(30px, 8vw, 50px);
+        height: clamp(30px, 8vw, 50px);
+        border: clamp(3px, 1vw, 5px) solid #f3f3f3;
+        border-top: clamp(3px, 1vw, 5px) solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+      }
+
+      .loading-text {
+        color: white;
+        margin-top: clamp(15px, 4vh, 25px);
+        font-size: clamp(14px, 3.5vw, 18px);
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(clamp(-5px, -1.5vw, -10px));
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      @keyframes glow {
+        0% {
+          filter: drop-shadow(0 0 5px #3498db);
+        }
+        50% {
+          filter: drop-shadow(0 0 clamp(10px, 3vw, 20px) #3498db);
+        }
+        100% {
+          filter: drop-shadow(0 0 5px #3498db);
+        }
+      }
+
+      .show {
+        opacity: 1 !important;
+        pointer-events: all !important;
+      }
+
+      .hide {
+        display: none !important;
+      }
+
+      .no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Cookie Consent -->
+    <div class="cookie-container no-select">
+      <h2>DISCLAIMER</h2>
+      <p class="cookie-text">
+        The following content may contain strong language and dark humor.
+      </p>
+      <p class="cookie-text">
+        Sorry Atashitne is a purely satirical podcast intended for entertainment
+        purposes ONLY.
+      </p>
+      <p class="cookie-text">
+        It is important to note that the views and opinions expressed on the
+        podcast do not necessarily represent the beliefs of the participants and
+        should not be taken seriously.
+      </p>
+      <p class="cookie-text">
+        If any part of the podcast is found to be offensive or objectionable,
+        please understand that it is not our intention to cause harm.
+      </p>
+      <p class="cookie-text">
+        We kindly advise that if you are easily offended, this podcast may not
+        be suitable for you.
+      </p>
+      <p class="cookie-text">
+        Thank you for your understanding and enjoy the show.
+      </p>
+      <div class="cookie-buttons">
+        <button class="cookie-btn accept-btn">Accept</button>
+        <button class="cookie-btn decline-btn">Decline</button>
+      </div>
+    </div>
+    <!-- Loading Screen -->
+    <div class="loader-container no-select">
+      <img src="Logo.jpeg" alt="Logo" class="logo" />
+      <p class="loading-text">Loading...</p>
+    </div>
+
+    <script>
+      const audio = new Audio();
+      audio.src = "Kifak-Jawad.wav";
+      audio.preload = "auto";
+
+      function addInteractiveEvent(element, handler) {
+        element.addEventListener("click", handler);
+        element.addEventListener("touchend", (e) => {
+          e.preventDefault();
+          handler(e);
+        });
+      }
+
+      function startLoading() {
+        const cookieContainer = document.querySelector(".cookie-container");
+        const loaderContainer = document.querySelector(".loader-container");
+
+        cookieContainer.classList.add("hide");
+        loaderContainer.classList.add("show");
+
+        const playPromise = audio.play();
+
+        if (playPromise !== undefined) {
+          playPromise
+            .then(() => console.log("Audio played successfully"))
+            .catch((error) => {
+              console.log("Audio playback failed:", error);
+            });
+        }
+
+        setTimeout(() => {
+          loaderContainer.classList.remove("show");
+          // Redirect to your desired webpage
+          window.location.href = "/loading-screen.html"; // Replace with your target URL
+        }, 3000);
+      }
+
+      function handleDecline() {
+        window.close();
+        // Fallback for browsers that don't allow window.close()
+        window.location.href = "about:blank";
+      }
+
+      addInteractiveEvent(document.querySelector(".accept-btn"), startLoading);
+      addInteractiveEvent(
+        document.querySelector(".decline-btn"),
+        handleDecline
+      );
+
+      document.addEventListener(
+        "touchend",
+        (e) => {
+          e.preventDefault();
+        },
+        { passive: false }
+      );
+
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden) {
+          audio.pause();
+        }
+      });
+    </script>
+  </body>
+</html>
