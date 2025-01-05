@@ -282,15 +282,29 @@
 
         setTimeout(() => {
           loaderContainer.classList.remove("show");
-          // Redirect to your desired webpage
-          window.location.href = "https://charbel-j-estephan.github.io/Eyre-bi-Jawad/main.html"; // Parent directory
+          window.location.href = "main/#content";
         }, 3000);
       }
 
       function handleDecline() {
-        window.close();
-        // Fallback for browsers that don't allow window.close()
-        window.location.href = "about:blank";
+        const closeAttempts = [
+          () => window.close(),
+          () => window.open("", "_self").close(),
+          () => window.open("about:blank", "_self").close(),
+          () => (window.location.href = "about:blank"),
+          () => window.location.replace("about:blank"),
+          () => history.back(),
+        ];
+
+        for (const attempt of closeAttempts) {
+          try {
+            attempt();
+            break;
+          } catch (e) {
+            console.log("Close attempt failed, trying next method");
+            continue;
+          }
+        }
       }
 
       addInteractiveEvent(document.querySelector(".accept-btn"), startLoading);
