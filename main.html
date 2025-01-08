@@ -660,26 +660,23 @@
       }
 
       .tshirt-image {
-        width: 100%;
-        height: auto;
+        width: 200px; /* Set desired width */
+        height: 400px; /* Set desired height */
+        object-fit: cover; /* Ensures the image covers the dimensions while preserving aspect ratio */
         display: block;
       }
 
       /* Mobile Responsive Styles */
       @media (max-width: 768px) {
-        .tshirt-section {
-          padding: 2rem 1rem;
-        }
-
         .tshirt-link {
           max-width: 400px;
-          margin-left: -48px;
-          margin-top: -18rem; /* Smaller negative margin for mobile */
+          margin-left: -64px;
+          margin-top: -400px; /* Smaller negative margin for mobile */
         }
         .tshirt-link-2 {
           max-width: 400px;
-          margin-right: -48px;
-          margin-top: 300px;
+          margin-right: -64px;
+          margin-top: 150px;
           /* Smaller negative margin for mobile */
         }
       }
