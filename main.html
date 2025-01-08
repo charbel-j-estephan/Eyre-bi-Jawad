@@ -618,7 +618,7 @@
         will-change: transform;
         transform: translateZ(0);
         overflow: hidden;
-        padding: 4rem 2rem;
+        padding: 2rem;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -632,6 +632,7 @@
         width: 100%;
         max-width: 600px;
         transition: transform 0.3s ease;
+        margin-left: -96px; /* Added negative margin to adjust arm spacing */
       }
 
       .tshirt-link:hover {
@@ -652,19 +653,6 @@
         display: block;
       }
 
-      .tshirt-text {
-        position: absolute;
-        top: 35%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: #ffe135;
-        font-family: "Noto Sans Arabic", sans-serif;
-        font-size: 2rem;
-        text-align: center;
-        direction: rtl;
-        white-space: nowrap;
-      }
-
       /* Mobile Responsive Styles */
       @media (max-width: 768px) {
         .tshirt-section {
@@ -673,15 +661,10 @@
 
         .tshirt-link {
           max-width: 400px;
-        }
-
-        .tshirt-text {
-          font-size: 1.5rem;
+          margin-left: -48px;
+          margin-top: -350px; /* Smaller negative margin for mobile */
         }
       }
-
-      /* Import Arabic Font */
-      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap");
     </style>
   </head>
   <body>
@@ -848,11 +831,10 @@
       <a href="/shop.html" class="tshirt-link">
         <div class="tshirt-image-container">
           <img
-            src="tshirt-mockup.jpg"
+            src="tshirt-mockup-1-removebg-preview.png"
             alt="Black T-shirt"
             class="tshirt-image"
           />
-          <div class="tshirt-text">كيفك جواد</div>
         </div>
       </a>
     </section>
