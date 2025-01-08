@@ -638,6 +638,18 @@
       .tshirt-link:hover {
         transform: scale(1.02);
       }
+      .tshirt-link-2 {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        transition: transform 0.3s ease;
+        margin-left: -96px; /* Added negative margin to adjust arm spacing */
+      }
+
+      .tshirt-link-2:hover {
+        transform: scale(1.02);
+      }
 
       .tshirt-image-container {
         position: relative;
@@ -662,7 +674,13 @@
         .tshirt-link {
           max-width: 400px;
           margin-left: -48px;
-          margin-top: -350px; /* Smaller negative margin for mobile */
+          margin-top: -18rem; /* Smaller negative margin for mobile */
+        }
+        .tshirt-link-2 {
+          max-width: 400px;
+          margin-right: -48px;
+          margin-top: 300px;
+          /* Smaller negative margin for mobile */
         }
       }
     </style>
@@ -832,6 +850,15 @@
         <div class="tshirt-image-container">
           <img
             src="tshirt-mockup-1-removebg-preview.png"
+            alt="Black T-shirt"
+            class="tshirt-image"
+          />
+        </div>
+      </a>
+      <a href="/shop.html" class="tshirt-link-2">
+        <div class="tshirt-image-container">
+          <img
+            src="312d8445-fb8c-4db0-8569-7674e8d941aa-removebg-preview (1).png"
             alt="Black T-shirt"
             class="tshirt-image"
           />
