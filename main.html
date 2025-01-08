@@ -613,6 +613,75 @@
           text-align: center; /* Center align on mobile */
         }
       }
+      .tshirt-section {
+        background: linear-gradient(135deg, #bafcff 0%, #ffffff 100%);
+        will-change: transform;
+        transform: translateZ(0);
+        overflow: hidden;
+        padding: 4rem 2rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        position: relative;
+      }
+
+      .tshirt-link {
+        text-decoration: none;
+        display: block;
+        width: 100%;
+        max-width: 600px;
+        transition: transform 0.3s ease;
+      }
+
+      .tshirt-link:hover {
+        transform: scale(1.02);
+      }
+
+      .tshirt-image-container {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .tshirt-image {
+        width: 100%;
+        height: auto;
+        display: block;
+      }
+
+      .tshirt-text {
+        position: absolute;
+        top: 35%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #ffe135;
+        font-family: "Noto Sans Arabic", sans-serif;
+        font-size: 2rem;
+        text-align: center;
+        direction: rtl;
+        white-space: nowrap;
+      }
+
+      /* Mobile Responsive Styles */
+      @media (max-width: 768px) {
+        .tshirt-section {
+          padding: 2rem 1rem;
+        }
+
+        .tshirt-link {
+          max-width: 400px;
+        }
+
+        .tshirt-text {
+          font-size: 1.5rem;
+        }
+      }
+
+      /* Import Arabic Font */
+      @import url("https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@400;700&display=swap");
     </style>
   </head>
   <body>
@@ -629,7 +698,7 @@
               >
               <span class="text arabic">شلحنا الفانيلا و بحس صار دورك</span>
             </h1>
-            <a href="#" class="cta-button">Shop Now</a>
+            <a href="shop.html" class="cta-button">Shop Now</a>
           </div>
         </div>
 
@@ -775,19 +844,18 @@
         </li>
       </ul>
     </div>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-    <p>hhhhh</p>
-
+    <section class="tshirt-section">
+      <a href="/shop.html" class="tshirt-link">
+        <div class="tshirt-image-container">
+          <img
+            src="tshirt-mockup.jpg"
+            alt="Black T-shirt"
+            class="tshirt-image"
+          />
+          <div class="tshirt-text">كيفك جواد</div>
+        </div>
+      </a>
+    </section>
     <script>
       // Handle hero content visibility
       const heroContent = document.querySelector(".hero-content");
