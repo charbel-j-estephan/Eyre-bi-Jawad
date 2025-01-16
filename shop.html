@@ -2,8 +2,833 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <title>Shop - Eyre Bi Jawad</title>
+    <link rel="icon" type="image/x-icon" href="Logo.jpeg" />
+    <style>
+      :root {
+        --primary-color: #3498db;
+        --text-light: #ffffff;
+        --text-dark: #333333;
+        --bg-dark: #1c1c1c;
+        --bg-card: #2c2c2c;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: linear-gradient(135deg, #bafcff 0%, #ffffff 100%);
+        min-height: 100vh;
+      }
+
+      .product-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        align-items: start;
+      }
+
+      .carousel {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1;
+        border-radius: 12px;
+        overflow: hidden;
+      }
+
+      .carousel-inner {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s ease-in-out;
+      }
+
+      .carousel-slide {
+        min-width: 100%;
+        height: 100%;
+        opacity: 0.8;
+        transition: opacity 0.3s ease;
+      }
+
+      .carousel-slide.active {
+        opacity: 1;
+      }
+
+      .carousel-slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .carousel-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(255, 255, 255, 0.8);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        transition: background-color 0.3s ease;
+        z-index: 2;
+      }
+
+      .carousel-button:hover {
+        background: rgba(255, 255, 255, 1);
+      }
+
+      .carousel-button.prev {
+        left: 1rem;
+      }
+
+      .carousel-button.next {
+        right: 1rem;
+      }
+
+      .carousel-dots {
+        position: absolute;
+        bottom: 1rem;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 0.5rem;
+        z-index: 2;
+      }
+
+      .carousel-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        border: none;
+        padding: 0;
+        transition: background-color 0.3s ease;
+      }
+
+      .carousel-dot.active {
+        background: white;
+      }
+
+      .product-info {
+        position: sticky;
+        top: 2rem;
+      }
+
+      .product-title {
+        font-size: 2.5rem;
+        color: var(--text-dark);
+        margin-bottom: 1rem;
+      }
+
+      .product-price {
+        font-size: 1.5rem;
+        color: var(--primary-color);
+        margin-bottom: 2rem;
+        font-weight: bold;
+      }
+
+      .product-description {
+        color: var(--text-dark);
+        line-height: 1.6;
+        margin-bottom: 2rem;
+      }
+
+      .size-guide {
+        margin-bottom: 2rem;
+      }
+
+      .size-guide h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+      }
+
+      .size-selector {
+        display: flex;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+      }
+
+      .size-btn {
+        padding: 0.75rem 1.5rem;
+        border: 2px solid #eaeaea;
+        border-radius: 8px;
+        background: none;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+      }
+
+      .size-btn:hover,
+      .size-btn.active {
+        background: var(--primary-color);
+        color: white;
+        border-color: var(--primary-color);
+      }
+
+      .size-availability {
+        font-size: 0.9rem;
+        color: #666;
+        margin-top: 0.5rem;
+      }
+
+      .quantity-selector {
+        margin: 2rem 0;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        width: fit-content;
+      }
+
+      .quantity-label {
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .quantity-controls {
+        display: flex;
+        align-items: center;
+        background: white;
+        border: 2px solid #eaeaea;
+        border-radius: 8px;
+        overflow: hidden;
+        width: 120px;
+      }
+
+      .quantity-btn {
+        width: 36px;
+        height: 36px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 1.2rem;
+        color: var(--primary-color);
+        transition: all 0.2s ease;
+      }
+
+      .quantity-btn:hover {
+        background: var(--primary-color);
+        color: white;
+      }
+
+      .quantity-input {
+        width: 48px;
+        text-align: center;
+        border: none;
+        border-left: 2px solid #eaeaea;
+        border-right: 2px solid #eaeaea;
+        height: 36px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text-dark);
+      }
+
+      .quantity-input::-webkit-inner-spin-button,
+      .quantity-input::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+
+      .purchase-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #ddd;
+      }
+
+      .purchase-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-bottom: 1rem;
+      }
+
+      .purchase-btn:hover {
+        background: #2980b9;
+      }
+
+      .shipping-info {
+        font-size: 0.9rem;
+        color: #666;
+        line-height: 1.6;
+      }
+
+      .modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1000;
+        overflow-y: auto;
+      }
+
+      .modal-content {
+        background: white;
+        max-width: 600px;
+        margin: 2rem auto;
+        padding: 2rem;
+        border-radius: 12px;
+        position: relative;
+      }
+
+      .close-modal {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #666;
+      }
+
+      .shipping-form {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .form-group label {
+        font-weight: 500;
+        color: var(--text-dark);
+      }
+
+      .form-group input {
+        padding: 0.75rem;
+        border: 2px solid #eaeaea;
+        border-radius: 8px;
+        font-size: 1rem;
+      }
+
+      .form-group input:focus {
+        border-color: var(--primary-color);
+        outline: none;
+      }
+
+      .payment-section {
+        margin-top: 2rem;
+        padding-top: 2rem;
+        border-top: 1px solid #eaeaea;
+      }
+
+      .order-summary {
+        background: #f8f8f8;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .montypay-btn {
+        width: 100%;
+        padding: 1rem;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 1rem;
+      }
+
+      .montypay-btn:hover {
+        background: #2980b9;
+      }
+
+      .back-btn {
+        position: fixed;
+        top: 2rem;
+        left: 2rem;
+        padding: 0.5rem 1rem;
+        background: white;
+        border: none;
+        border-radius: 100px;
+        cursor: pointer;
+        text-decoration: none;
+        color: var(--text-dark);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease;
+        z-index: 3;
+      }
+
+      .back-btn:hover {
+        transform: translateX(-5px);
+      }
+
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1rem 2rem;
+        border-radius: 8px;
+        color: white;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        transition: transform 0.3s ease, opacity 0.3s ease;
+        transform: translateX(100%);
+      }
+
+      .notification.success {
+        background: #44b544;
+      }
+
+      .notification.error {
+        background: #ff4444;
+      }
+
+      @media (max-width: 768px) {
+        .product-section {
+          grid-template-columns: 1fr;
+          gap: 2rem;
+          padding: 1rem;
+        }
+
+        .product-info {
+          position: relative;
+          top: 0;
+          padding: 0 1rem;
+        }
+
+        .product-title {
+          font-size: 1.75rem;
+          margin-top: 1rem;
+        }
+
+        .product-price {
+          font-size: 1.25rem;
+          margin-bottom: 1rem;
+        }
+
+        .product-description {
+          font-size: 0.95rem;
+          margin-bottom: 1.5rem;
+        }
+
+        .size-selector {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 0.5rem;
+        }
+
+        .size-btn {
+          padding: 0.5rem;
+          font-size: 0.9rem;
+          width: 100%;
+        }
+
+        .modal-content {
+          margin: 1rem;
+          padding: 1.5rem;
+        }
+
+        .back-btn {
+          top: 0.75rem;
+          left: 0.75rem;
+          font-size: 0.9rem;
+          padding: 0.4rem 0.8rem;
+        }
+      }
+    </style>
   </head>
-  <body></body>
+  <body>
+    <a href="main.html" class="back-btn">← Back to Home</a>
+
+    <section class="product-section">
+      <!-- Product Carousel -->
+      <div class="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-slide active">
+            <img src="1.jpg" alt="T-Shirt Front" />
+          </div>
+          <div class="carousel-slide">
+            <img src="2.jpg" alt="T-Shirt Back" />
+          </div>
+          <div class="carousel-slide">
+            <img src="3.jpg" alt="T-Shirt Detail" />
+          </div>
+          <div class="carousel-slide">
+            <img src="5.jpg" alt="T-Shirt Worn" />
+          </div>
+          <div class="carousel-slide">
+            <img src="6.jpg" alt="T-Shirt Style" />
+          </div>
+        </div>
+        <button class="carousel-button prev">‹</button>
+        <button class="carousel-button next">›</button>
+        <div class="carousel-dots">
+          <button class="carousel-dot active"></button>
+          <button class="carousel-dot"></button>
+          <button class="carousel-dot"></button>
+          <button class="carousel-dot"></button>
+          <button class="carousel-dot"></button>
+        </div>
+      </div>
+
+      <!-- Product Information -->
+      <div class="product-info">
+        <h1 class="product-title">Sorry Attachtine T-Shirt</h1>
+        <p class="product-price">$29.99</p>
+        <p class="product-description">
+          Our signature t-shirt featuring the iconic "Sorry Attachtine" design.
+          Made from premium cotton for maximum comfort and durability. Perfect
+          for making a statement while staying comfortable.
+        </p>
+
+        <div class="size-guide">
+          <h3>Select Size</h3>
+          <div class="size-selector">
+            <button class="size-btn" data-size="S">S</button>
+            <button class="size-btn" data-size="M">M</button>
+            <button class="size-btn" data-size="L">L</button>
+            <button class="size-btn" data-size="XL">XL</button>
+            <button class="size-btn" data-size="XXL">XXL</button>
+            <button class="size-btn" data-size="Oversized">Oversized</button>
+          </div>
+          <p class="size-availability">All sizes currently in stock</p>
+        </div>
+
+        <div class="quantity-selector">
+          <span class="quantity-label">Quantity:</span>
+          <div class="quantity-controls">
+            <button class="quantity-btn decrease">−</button>
+            <input
+              type="number"
+              class="quantity-input"
+              value="1"
+              min="1"
+              max="10"
+            />
+            <button class="quantity-btn increase">+</button>
+          </div>
+        </div>
+
+        <div class="purchase-section">
+          <button class="purchase-btn">Buy Now</button>
+          <div class="shipping-info">
+            <p>• Free shipping on all orders</p>
+            <p>• Expected delivery: 3-5 business days</p>
+            <p>• Easy returns within 30 days</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Checkout Modal -->
+    <div id="checkoutModal" class="modal">
+      <div class="modal-content">
+        <button class="close-modal">&times;</button>
+        <h2 style="margin-bottom: 1.5rem">Checkout</h2>
+
+        <form id="shippingForm" class="shipping-form">
+          <div class="form-group">
+            <label for="fullName">Full Name</label>
+            <input type="text" id="fullName" required />
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone Number</label>
+            <input type="tel" id="phone" required />
+          </div>
+
+          <div class="form-group">
+            <label for="address">Shipping Address</label>
+            <input type="text" id="address" required />
+          </div>
+
+          <div class="form-group">
+            <label for="city">City</label>
+            <input type="text" id="city" required />
+          </div>
+
+          <div class="form-group">
+            <label for="postalCode">Postal Code</label>
+            <input type="text" id="postalCode" required />
+          </div>
+
+          <div class="payment-section">
+            <div class="order-summary">
+              <h3>Order Summary</h3>
+              <p>Product: Sorry Attachtine T-Shirt</p>
+              <p>Size: <span id="summarySize">-</span></p>
+              <p>Quantity: <span id="summaryQuantity">-</span></p>
+              <p>Total: $<span id="summaryTotal">-</span></p>
+            </div>
+
+            <button type="submit" class="montypay-btn">
+              Complete Checkout
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Carousel functionality
+      const carousel = document.querySelector(".carousel");
+      const carouselInner = carousel.querySelector(".carousel-inner");
+      const slides = carousel.querySelectorAll(".carousel-slide");
+      const dots = carousel.querySelectorAll(".carousel-dot");
+      let currentSlide = 0;
+      let autoSlideInterval;
+
+      function updateCarousel() {
+        carouselInner.style.transform = `translateX(-${currentSlide * 100}%)`;
+        slides.forEach((slide, index) => {
+          slide.classList.toggle("active", index === currentSlide);
+        });
+        dots.forEach((dot, index) => {
+          dot.classList.toggle("active", index === currentSlide);
+        });
+      }
+
+      function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        updateCarousel();
+      }
+
+      function startAutoSlide() {
+        autoSlideInterval = setInterval(nextSlide, 10000);
+      }
+
+      function stopAutoSlide() {
+        clearInterval(autoSlideInterval);
+      }
+
+      startAutoSlide();
+
+      carousel.addEventListener("mouseenter", stopAutoSlide);
+      carousel.addEventListener("mouseleave", startAutoSlide);
+
+      carousel.querySelector(".prev").addEventListener("click", () => {
+        stopAutoSlide();
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        updateCarousel();
+        startAutoSlide();
+      });
+
+      carousel.querySelector(".next").addEventListener("click", () => {
+        stopAutoSlide();
+        nextSlide();
+        startAutoSlide();
+      });
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener("click", () => {
+          stopAutoSlide();
+          currentSlide = index;
+          updateCarousel();
+          startAutoSlide();
+        });
+      });
+
+      // Touch support for mobile
+      let touchStartX = 0;
+      let touchEndX = 0;
+
+      carousel.addEventListener("touchstart", (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+        stopAutoSlide();
+      });
+
+      carousel.addEventListener("touchend", (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+        startAutoSlide();
+      });
+
+      function handleSwipe() {
+        const SWIPE_THRESHOLD = 50;
+        const difference = touchStartX - touchEndX;
+
+        if (Math.abs(difference) > SWIPE_THRESHOLD) {
+          if (difference > 0) {
+            nextSlide();
+          } else {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel();
+          }
+        }
+      }
+
+      // Size selection
+      const sizeButtons = document.querySelectorAll(".size-btn");
+      let selectedSize = null;
+
+      sizeButtons.forEach((button) => {
+        button.addEventListener("click", () => {
+          sizeButtons.forEach((btn) => btn.classList.remove("active"));
+          button.classList.add("active");
+          selectedSize = button.dataset.size;
+        });
+      });
+
+      // Quantity controls
+      const quantityInput = document.querySelector(".quantity-input");
+      const decreaseBtn = document.querySelector(".decrease");
+      const increaseBtn = document.querySelector(".increase");
+
+      function updateQuantity(value) {
+        let newValue = parseInt(value);
+        if (isNaN(newValue)) newValue = 1;
+        if (newValue < 1) newValue = 1;
+        if (newValue > 10) newValue = 10;
+        quantityInput.value = newValue;
+        return newValue;
+      }
+
+      decreaseBtn.addEventListener("click", () => {
+        updateQuantity(parseInt(quantityInput.value) - 1);
+      });
+
+      increaseBtn.addEventListener("click", () => {
+        updateQuantity(parseInt(quantityInput.value) + 1);
+      });
+
+      quantityInput.addEventListener("change", (e) => {
+        updateQuantity(e.target.value);
+      });
+
+      // Modal and Checkout functionality
+      const modal = document.getElementById("checkoutModal");
+      const closeModal = document.querySelector(".close-modal");
+      const purchaseBtn = document.querySelector(".purchase-btn");
+      const shippingForm = document.getElementById("shippingForm");
+
+      function showNotification(message, isError = false) {
+        const existingNotification = document.querySelector(".notification");
+        if (existingNotification) {
+          existingNotification.remove();
+        }
+
+        const notification = document.createElement("div");
+        notification.className = `notification ${
+          isError ? "error" : "success"
+        }`;
+        notification.textContent = message;
+        document.body.appendChild(notification);
+
+        setTimeout(() => {
+          notification.style.transform = "translateX(0)";
+        }, 10);
+
+        setTimeout(() => {
+          notification.style.transform = "translateX(100%)";
+          notification.style.opacity = "0";
+          setTimeout(() => {
+            notification.remove();
+          }, 300);
+        }, 3000);
+      }
+
+      purchaseBtn.addEventListener("click", () => {
+        if (!selectedSize) {
+          showNotification("Please select a size", true);
+          return;
+        }
+
+        document.getElementById("summarySize").textContent = selectedSize;
+        document.getElementById("summaryQuantity").textContent =
+          quantityInput.value;
+        document.getElementById("summaryTotal").textContent = (
+          29.99 * parseInt(quantityInput.value)
+        ).toFixed(2);
+
+        modal.style.display = "block";
+      });
+
+      closeModal.addEventListener("click", () => {
+        modal.style.display = "none";
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          modal.style.display = "none";
+        }
+      });
+
+      // MontyPay Integration
+      shippingForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const orderData = {
+          product: "Sorry Attachtine T-Shirt",
+          size: selectedSize,
+          quantity: parseInt(quantityInput.value),
+          total: 29.99 * parseInt(quantityInput.value),
+          shipping: {
+            fullName: document.getElementById("fullName").value,
+            email: document.getElementById("email").value,
+            phone: document.getElementById("phone").value,
+            address: document.getElementById("address").value,
+            city: document.getElementById("city").value,
+            postalCode: document.getElementById("postalCode").value,
+          },
+        };
+
+        try {
+          // Initialize MontyPay payment
+          const montyPayConfig = {
+            merchantId: "YOUR_MERCHANT_ID", // Replace with your MontyPay merchant ID
+            amount: orderData.total,
+            currency: "USD",
+            orderId: Date.now().toString(), // Generate unique order ID
+            customerEmail: orderData.shipping.email,
+            customerName: orderData.shipping.fullName,
+            description: `Sorry Attachtine T-Shirt - Size: ${orderData.size}, Qty: ${orderData.quantity}`,
+          };
+
+          // Redirect to MontyPay payment page
+          window.location.href =
+            `https://checkout.montypay.com/pay?` +
+            new URLSearchParams(montyPayConfig).toString();
+        } catch (error) {
+          showNotification(
+            "An error occurred during payment. Please try again.",
+            true
+          );
+          console.error("Payment error:", error);
+        }
+      });
+    </script>
+  </body>
 </html>
